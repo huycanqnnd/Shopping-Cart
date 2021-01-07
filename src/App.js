@@ -103,7 +103,7 @@ function App() {
     setProducts(products);
   }
 
-  function GetPecent() {
+  function onApplyPromoCode() {
 
     let pro = ListPromotions.find((p) => {
       if (p.code === inputPromotion) {
@@ -143,8 +143,8 @@ function App() {
             <Promotion
               inputPromotion={inputPromotion}
               setInputPromotion={setInputPromotion}
-              GetPecent={() => {
-                GetPecent();
+              onApplyPromoCode={() => {
+                onApplyPromoCode();
               }}
             ></Promotion>
           </div>

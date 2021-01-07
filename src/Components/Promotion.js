@@ -1,4 +1,4 @@
-function Promotion({ GetPecent, inputPromotion, setInputPromotion }) {
+function Promotion({ onApplyPromoCode, inputPromotion, setInputPromotion }) {
   return (
 
       <div className = "promotion">
@@ -12,7 +12,7 @@ function Promotion({ GetPecent, inputPromotion, setInputPromotion }) {
         <button
           type="button"
           onClick={() => {
-            GetPecent();
+            onApplyPromoCode();
           }}
         >
           {" "}
