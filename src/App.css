@@ -209,10 +209,10 @@ header .count {
 
 /* --- SUMMARY --- */
 .promotion,
-.summary,
+/* .summary, */
 .checkout {
   float: left;
-  width: 100%;
+  width: 50%;
   margin-top: 1.5rem;
 }
 
@@ -255,6 +255,7 @@ header .count {
 .summary {
   font-size: 1.2rem;
   text-align: right;
+  
 }
 
 .summary ul li {
@@ -334,7 +335,8 @@ header .count {
 
   .promotion,
   .summary {
-    width: 50%;
+    width: 70%;
+    padding-left: 80px;
   }
 
   .checkout {
@@ -344,6 +346,7 @@ header .count {
   .checkout,
   .summary {
     text-align: right;
+    width: 100%;
   }
 }
 

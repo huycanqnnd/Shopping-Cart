@@ -1,73 +1,155 @@
-import logo from "./logo.svg";
+/* eslint-disable array-callback-return */
 import "./App.css";
 import Header from "./Components/Header";
 import Checkout from "./Components/Checkout";
 import Item from "./Components/Item";
+import Promotion from "./Components/Promotion";
 import { useState } from "react";
+import apple from "./image/apple.jpg";
+import milk from "./image/milk.jpg";
+import orange from "./image/orange.jpg";
+import banana from "./image/banana.jpg";
+
 const PRODUCTS = [
   {
     name: "Apple",
     description: "Delicious apple",
-    image: "/apple.jpg",
-    price: 2000000,
+    image: apple,
+    price: 200000,
     vat: 10,
-    quantity: 12,
+    quantity: 15,
   },
   {
     name: "Milk",
     description: "Description for milk",
-    image: "/milk.jpg",
+    image: milk,
     vat: 10,
-    price: 4000000,
-    quantity: 15,
+    price: 400000,
+    quantity: 10,
+  },
+  {
+    name: "oranges",
+    description: "Description for oranges",
+    image: orange,
+    vat: 10,
+    price: 300000,
+    quantity: 5,
+  },
+  {
+    name: "banana",
+    description: "Description for banana",
+    image: banana,
+    vat: 10,
+    price: 250000,
+    quantity: 10,
+  },
+];
+
+const ListPromotions = [
+  {
+    code: "1",
+    pecent: 10,
+  },
+  {
+    code: "2",
+    pecent: 20,
+  },
+  {
+    code: "3",
+    pecent: 30,
+  },
+  {
+    code: "4",
+    pecent: 40,
+  },
+  {
+    code: "5",
+    pecent: 50,
   },
 ];
 
 function App() {
+  let [products, setProducts] = useState(PRODUCTS);
+  let [inputPromotion, setInputPromotion] = useState("");
+  let [pecent, setPecent] = useState(0);
 
-  let [products, setProducts] = useState(PRODUCTS)
   let items = [];
   let totalItems = 0;
-  let subtotal= 0;
+  let subtotal = 0;
 
-  for (let i = 0; i < products.length; i++) {
-    items.push(
+  items = products.map((p) => {
+    totalItems += p.quantity;
+    subtotal += p.price * p.quantity;
+    return (
       <Item
-        key={products[i].name}
-        name={products[i].name}
-        description={products[i].description}
-        src={products[i].image}
-        vat={products[i].vat}
-        price={products[i].price}
-        quantity={products[i].quantity}
-        onRemoveProduct = {onRemoveProduct}
+        key={p.name}
+        name={p.name}
+        description={p.description}
+        src={p.image}
+        vat={p.vat}
+        price={p.price}
+        quantity={p.quantity}
+        onQuantityChanged={onQuantityChanged}
+        onRemoveProduct={onRemoveProduct}
       />
     );
-    totalItems += products[i].quantity;
-    subtotal +=products[i].price * products[i].quantity;
-  }
-
+  });
 
   function onRemoveProduct(name) {
-    alert(name);
-    products = products.filter(product => {
+    products = products.filter((product) => {
       return product.name !== name;
-    },[]);
-    console.log(products);
+    });
 
-    setProducts(
-      products
-    )
-    
+    setProducts(products);
   }
+
+  function GetPecent() {
+
+    let pro = ListPromotions.find((p) => {
+      if (p.code === inputPromotion) {
+        return p;
+      }
+    });
+
+    if (pro) setPecent(pro.pecent);
+    else setPecent(0);
+  }
+
+  function onQuantityChanged(newQuantity, productName) {
+    const newProducts = products.map((product) => {
+      if (product.name !== productName) {
+        return product;
+      }
+
+      const newProduct = {
+        ...product,
+        quantity: parseInt(newQuantity),
+      };
+
+      return newProduct;
+    });
+    setProducts(newProducts);
+  }
+
   return (
     <div>
-      <Header totalItems={totalItems}></Header>
-      <section className="container">
-        <ul className="products">{items}</ul>
-      </section>
-      <Checkout Subtotal = {subtotal}/>
-      {/* <button onClick={onRemoveProduct}>Fake remove</button> */}
+
+      <div>
+        <Header totalItems={totalItems}></Header>
+        <section className="container">
+          <ul className="products">{items}</ul>
+        </section>
+          <div className="promotion">
+            <Promotion
+              inputPromotion={inputPromotion}
+              setInputPromotion={setInputPromotion}
+              GetPecent={() => {
+                GetPecent();
+              }}
+            ></Promotion>
+          </div>
+          <Checkout Subtotal={subtotal} pecent={pecent} />
+      </div>
     </div>
   );
 }

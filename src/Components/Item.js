@@ -1,6 +1,15 @@
-import { NumberFormat } from '../Format/NumberFormat'
-function Item({ src, name, description, price, quantity, onRemoveProduct }) {
-
+import { NumberFormat } from "../Format/NumberFormat";
+import classes from "./ListItem.module.css";
+function Item({
+  src,
+  name,
+  description,
+  vat,
+  price,
+  quantity,
+  onRemoveProduct,
+  onQuantityChanged,
+}) {
   return (
     <li className="row">
       <div className="col left">
@@ -13,13 +22,20 @@ function Item({ src, name, description, price, quantity, onRemoveProduct }) {
           <div className="name">
             <a href="/">{name}</a>
           </div>
-          <div className="description">{description}</div>
-          <div className="price">{NumberFormat(price)}</div>
+          <div className={classes.listItemDescription}>{description}</div>
+          <div className="price">Price: {NumberFormat(price)}</div>
+          <div className="vat">VAT: {vat}</div>
         </div>
       </div>
       <div className="col right">
         <div className="quantity">
-          <input type="number" className="quantity" step={1} value={quantity} />
+          <input
+            type="number"
+            className="quantity"
+            step={1}
+            onChange = {(event) => onQuantityChanged(event.target.value,name)}
+            value={quantity}
+          />
         </div>
         <div className="remove">
           <svg
