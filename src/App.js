@@ -74,12 +74,21 @@ function App() {
   let [pecent, setPecent] = useState(0);
 
   let items = [];
+
   let totalItems = 0;
   let subtotal = 0;
-
   items = products.map((p) => {
-    totalItems += p.quantity;
-    subtotal += p.price * p.quantity;
+    // totalItems += p.quantity;
+    // subtotal += p.price * p.quantity;
+
+    totalItems = products.reduce(function(totalQuantity,pd) {
+      return totalQuantity += pd.quantity;
+    },0);
+
+    subtotal = products.reduce(function(subTotal,pd) {
+      return subTotal += pd.quantity * pd.price;
+    },0);
+
     return (
       <Item
         key={p.name}

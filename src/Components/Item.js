@@ -15,7 +15,7 @@ function Item({
       <div className="col left">
         <div className="thumbnail">
           <a href="/">
-            <img src={src} alt={"Ảnh " + name} />
+            <img src = {src} alt={"Ảnh " + name} />
           </a>
         </div>
         <div className="detail">
